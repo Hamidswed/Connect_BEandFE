@@ -20,10 +20,22 @@ export const getUserId = async (req: Request, res: Response) => {
 };
 
 export const createUser = async (req: Request, res: Response) => {
-  const newUser = req.body;
-  userList.push(newUser);
   try {
-    res.json(userList) && res.status(200);
+    const newUser = req.body;
+    const index = userList.findIndex((user) => user.email === newUser.email);
+
+    if (index === -1) {
+      console.log("error");
+    } else {
+      if (
+        userList[index].email === newUser.email &&
+        userList[index].password === newUser.password
+      ) {
+        res.json(userList[index]) && res.status(200);
+      } else {
+        console.log("error");
+      }
+    }
   } catch (error) {
     console.log(error);
   }
