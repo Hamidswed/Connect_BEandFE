@@ -1,0 +1,36 @@
+.form-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+}
+.form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 25px 5px rgba(0,0,0,0.07);
+}
+.form div{
+  width: 100%;
+}
+.form button{
+  width: 100%;
+}
+.form p{
+  color: red;
+  font-size: 12px;
+}
+.welcome{
+  font-size: 50px;
+  font-weight: bold;
+  text-align: center;
+}
+.welcome span{
+  font-size: 25px;
+  font-weight: normal;
+}

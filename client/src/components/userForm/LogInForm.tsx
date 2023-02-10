@@ -4,8 +4,9 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import "./login.css";
 import { forwardRef, useState } from "react";
+import { UserType } from "../../types/userType";
+import "./loginForm.css";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -33,20 +34,18 @@ const LogInForm = () => {
     setOpen(false);
   };
 
-  type InitialType = {
-    username: string;
-    password: string;
-  };
-
-  const initiialValues: InitialType = {
-    username: "",
+  const initiialValues: UserType = {
+    id: 1,
+    name: "",
+    email: "",
     password: "",
+    image: "",
   };
 
   const SinginSchema = Yup.object().shape({
-    username: Yup.string()
+    email: Yup.string()
       .email("Invalid email")
-      .required("Please Enter your username"),
+      .required("Please Enter your email"),
     password: Yup.string()
       .min(7, "It should be more than 6 character")
       .matches(
@@ -55,9 +54,22 @@ const LogInForm = () => {
       )
       .required("Please Enter your password"),
   });
-  const submitHandler = (values: InitialType) => {
+  const submitHandler = (values: UserType) => {
     console.log(values);
-    setName(values.username);
+    fetch("http://localhost:8000/users", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    })
+      .then((response) => response.json())
+      .then((values) => {
+        console.log("Success:", values);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
     handleClick();
     setIsLogin(true);
   };
@@ -75,13 +87,11 @@ const LogInForm = () => {
                 <div>
                   <TextField
                     required
-                    name="username"
-                    label="Username"
+                    name="email"
+                    label="Email"
                     onChange={handleChange}
                   />
-                  {errors.username && touched.username ? (
-                    <p>{errors.username}</p>
-                  ) : null}
+                  {errors.email && touched.email ? <p>{errors.email}</p> : null}
                 </div>
                 <div>
                   <TextField
@@ -96,7 +106,7 @@ const LogInForm = () => {
                   ) : null}
                 </div>
                 <Button variant="contained" type="submit">
-                  Submit
+                  Log In
                 </Button>
               </Form>
             );
