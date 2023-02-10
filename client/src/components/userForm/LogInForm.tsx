@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import { forwardRef, useState } from "react";
 import { UserType } from "../../types/userType";
 import "./loginForm.css";
+import UserInformation from "../userInformation/UserInformation";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -16,8 +17,9 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 const LogInForm = () => {
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState<UserType>();
   const [isLogin, setIsLogin] = useState(false);
-  const [name, setName] = useState("");
+  const [submitClicked, setSubmitClicked] = useState(false);
 
   const handleClick = () => {
     setOpen(true);
@@ -55,6 +57,7 @@ const LogInForm = () => {
       .required("Please Enter your password"),
   });
   const submitHandler = (values: UserType) => {
+    setSubmitClicked(true);
     console.log(values);
     fetch("http://localhost:8000/users", {
       method: "POST", // or 'PUT'
@@ -64,15 +67,21 @@ const LogInForm = () => {
       body: JSON.stringify(values),
     })
       .then((response) => response.json())
-      .then((values) => {
-        console.log("Success:", values);
+      .then((data) => {
+        setUser(data);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
-    handleClick();
-    setIsLogin(true);
+    if (user?.email === values.email && user.password === values.password) {
+      handleClick();
+      setIsLogin(true);
+    }
   };
+  console.log("Success:", user);
+  console.log("is login", isLogin);
+  console.log("clicked", submitClicked);
+
   return (
     <div className="form-container">
       {!isLogin ? (
@@ -108,17 +117,15 @@ const LogInForm = () => {
                 <Button variant="contained" type="submit">
                   Log In
                 </Button>
+                {!isLogin && submitClicked ? (
+                  <p>Invalid email or password!</p>
+                ) : null}
               </Form>
             );
           }}
         </Formik>
       ) : (
-        <div className="welcome">
-          Welcome! <span>{name}</span>
-          <Button variant="outlined" onClick={() => setIsLogin(false)}>
-            Back
-          </Button>
-        </div>
+        <UserInformation user={user} />
       )}
 
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

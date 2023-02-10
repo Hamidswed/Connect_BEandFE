@@ -10,5 +10,8 @@
 .login-form{
   display: flex;
   justify-content: center;
+  /* background-image: linear-gradient(79deg, #7439db, #c66fbc 48%, #f7944d);
+  background-position: center;
+  min-height: 100vh; */
 }
 
