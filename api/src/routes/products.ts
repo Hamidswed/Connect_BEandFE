@@ -1,4 +1,3 @@
-// create product routes here
 import { Router } from "express";
 import { getProductList } from "../controllers/products";
 
