@@ -1,5 +1,5 @@
-import { AppDispatch } from "../../store";
-import { actions } from "./../product";
+import { AppDispatch } from "../store";
+import { actions } from "../slice/product";
 
 const url = "http://localhost:8000/products";
 export function fetchProductData() {
@@ -8,4 +8,5 @@ export function fetchProductData() {
     const data = await response.json();
     dispatch(actions.getProductData(data));
   };
+  
 }
