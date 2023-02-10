@@ -74,8 +74,8 @@ const LogInForm = () => {
         console.error("Error:", error);
       });
     if (user?.email === values.email && user.password === values.password) {
-      handleClick();
       setIsLogin(true);
+      handleClick();
     }
   };
   console.log("Success:", user);
@@ -117,9 +117,7 @@ const LogInForm = () => {
                 <Button variant="contained" type="submit">
                   Log In
                 </Button>
-                {!isLogin && submitClicked ? (
-                  <p>Invalid email or password!</p>
-                ) : null}
+                {submitClicked ? (!isLogin&&<p>Invalid email or password!</p>) : null}
               </Form>
             );
           }}

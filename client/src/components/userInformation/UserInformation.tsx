@@ -1,16 +1,24 @@
 import React from "react";
 import { UserType } from "../../types/userType";
+import Avatar from "@mui/material/Avatar";
+import "./userInformation.css";
+import { Button } from "@mui/material";
 
 type PropType = {
-  user: UserType|undefined;
+  user: UserType | undefined;
 };
 export default function UserInformation({ user }: PropType) {
   return (
-    <div>
+    <div className="user-info">
       UserInformation
-      <p>{user?.name}</p>
-      <p>{user?.email}</p>
-      <p>{user?.image}</p>
+      <Avatar
+        alt={user?.name}
+        src={user?.image}
+        sx={{ width: 64, height: 64 }}
+      />
+      <p>name: {user?.name}</p>
+      <p>email: {user?.email}</p>
+      <Button>Log out</Button>
     </div>
   );
 }
