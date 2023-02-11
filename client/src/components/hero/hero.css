@@ -1,0 +1,30 @@
+.hero{
+  position: relative;
+  width: 100%;
+  min-height: 1000px;
+  padding: 100px 20px;
+  display: flex;
+  background-image: url('../../assets/hero.jpg');
+  background-size: cover;
+}
+.hero-left{
+  flex: 1;
+}
+.hero-left video{
+  border-radius: 10px;
+  background-color: black;
+  position: absolute;
+  top:250px;
+  left:260px
+}
+.hero-right{
+  flex:1.5;
+}
+.hero-right :first-child{
+  padding-top: 150px;
+}
+.hero-right :last-child{
+  background: -webkit-linear-gradient(45deg, #2FA2B7,  #7D88FD,#F65AAA,#ED3F4B);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
