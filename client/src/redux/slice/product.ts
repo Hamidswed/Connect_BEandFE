@@ -11,7 +11,6 @@ type InitialType = {
   favorites: ProductType[];
   carts: ProductType[];
   totalPrice: number;
-  isAddToFav: boolean;
 };
 
 const initialState: InitialType = {
@@ -19,7 +18,6 @@ const initialState: InitialType = {
   favorites: favouriteItems,
   carts: [],
   totalPrice: 0,
-  isAddToFav: false,
 };
 
 
@@ -34,10 +32,10 @@ const productSlice = createSlice({
       const index = state.carts.findIndex(
         (item) => item.id === action.payload.id
       );
-      const updatedProduct = { ...action.payload, qty: 1 };
+      // const updatedProduct = { ...action.payload, qty: 1 };
 
       if (index === -1) {
-        state.carts.push(updatedProduct);
+        state.carts.push(action.payload);
       } else {
         state.carts[index].qty++;
       }
@@ -69,7 +67,6 @@ const productSlice = createSlice({
       );
       if (index === -1) {
         state.favorites.push(action.payload);
-        state.isAddToFav = true;
         localStorage.setItem(
           "favorites",
           JSON.stringify(state.favorites.map((item) => item))

@@ -6,8 +6,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Alert, Snackbar } from "@mui/material";
 import { ProductType } from "../../types/productType";
-import { useDispatch, useSelector } from 'react-redux';
-import { actions } from './../../redux/slice/product';
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "./../../redux/slice/product";
 import { useState } from "react";
 import { RootState } from "../../redux/store";
 
@@ -15,31 +15,66 @@ type PropType = {
   product: ProductType;
 };
 export default function ProductItem({ product }: PropType) {
-  const dispatch = useDispatch()
-  const isFavorite = useSelector(
-    (state: RootState) => state.product.isAddToFav
-  );
+  const dispatch = useDispatch();
+  const favList = useSelector((state: RootState) => state.product.favorites);
+  const isFavorite = favList.some((fav) => fav.id === product.id);
+  const cartList = useSelector((state: RootState) => state.product.carts);
+  const index = cartList.findIndex((cart) => cart.id === product.id);
   const [open, setOpen] = useState(false);
+  const [openCart, setOpenCart] = useState(false);
 
   const handleClick = () => {
     setOpen(true);
   };
 
-  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
       return;
     }
 
     setOpen(false);
   };
-  if(isFavorite){
-    handleClick()
-  }
+
+  const handleClickCart = () => {
+    setOpenCart(true);
+  };
+
+  const handleCloseCart = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenCart(false);
+  };
+
+  const addToCart = () => {
+    dispatch(actions.addToCart(product));
+    handleClickCart();
+  };
+  const addToFavorite = () => {
+    if (!isFavorite) {
+      dispatch(actions.addToFavorite(product));
+    } else {
+      handleClick();
+    }
+  };
+
   return (
     <div>
       <Card sx={{ width: 345 }}>
         <CardMedia
-          sx={{ height: 300,width:'fit-content',padding:'20px',margin:'0 auto' }}
+          sx={{
+            height: 300,
+            width: "fit-content",
+            padding: "20px",
+            margin: "0 auto",
+          }}
           image={product.image}
           component="img"
           title={product.title}
@@ -52,14 +87,32 @@ export default function ProductItem({ product }: PropType) {
             ${product.price}
           </Typography>
         </CardContent>
-        <CardActions>
-          <Button size="small" onClick={()=>dispatch(actions.addToCart(product))}>Add to cart</Button>
-          <Button size="small" onClick={()=>dispatch(actions.addToFavorite(product))}>Add to favorite</Button>
+        <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+          <Button size="small" onClick={addToCart}>
+            Add to cart
+          </Button>
+          <Button size="small" onClick={addToFavorite}>
+            Add to favorite
+          </Button>
         </CardActions>
       </Card>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          The product is already added to favorite!
+          {product.title} is already added to favorite!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openCart}
+        autoHideDuration={3000}
+        onClose={handleCloseCart}
+      >
+        <Alert
+          onClose={handleCloseCart}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          <strong>{cartList[index]?.qty}</strong> {product.title} has been added
+          to cart!
         </Alert>
       </Snackbar>
     </div>

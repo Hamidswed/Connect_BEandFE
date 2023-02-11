@@ -51,15 +51,10 @@ export default function NavBar() {
     >
       <AppBar position="static" sx={{ backgroundColor: "#474747" }}>
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            aria-haspopup="true"
-            color="inherit"
+        <MenuItem component={Link} to={"/"}
           >
-            <Logo />
-          </IconButton>
-
+            <Logo style={{width:"150px"}} />
+          </MenuItem>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex", gap: "10px" } }}>
           <Tooltip title="Home">
