@@ -12,6 +12,7 @@ import styled from "@emotion/styled";
 import MenuIcon from "@mui/icons-material/Menu";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -28,6 +29,7 @@ const StyledBadge = styled(Badge)<BadgeProps>(() => ({
 
 export default function NavBar() {
   // const favList = useSelector((state: RootState) => state.country.favorite);
+  const cartState = useSelector((state: RootState) => state.product.carts);
 
   return (
     <Box
@@ -71,6 +73,11 @@ export default function NavBar() {
           </MenuItem>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <MenuItem component={Link} to={"/cart"}>
+              <StyledBadge badgeContent={cartState.length} color="error">
+                <ShoppingCartIcon />
+              </StyledBadge>
+            </MenuItem>
             <MenuItem component={Link} to={"/favorites"}>
               <StyledBadge badgeContent="4" color="error">
                 <FavoriteIcon />

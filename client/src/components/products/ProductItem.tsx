@@ -5,11 +5,14 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { ProductType } from "../../types/productType";
+import { useDispatch } from 'react-redux';
+import { actions } from './../../redux/slice/product';
 
 type PropType = {
   product: ProductType;
 };
 export default function ProductItem({ product }: PropType) {
+  const dispatch = useDispatch()
   return (
     <div>
       <Card sx={{ width: 345 }}>
@@ -28,7 +31,7 @@ export default function ProductItem({ product }: PropType) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Add to cart</Button>
+          <Button size="small" onClick={()=>dispatch(actions.addToCart(product))}>Add to cart</Button>
           <Button size="small">Add to favorite</Button>
         </CardActions>
       </Card>
