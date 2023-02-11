@@ -10,18 +10,30 @@ export default function UserInformation() {
   const dispatch = useDispatch();
   return (
     <div className="user-info">
-      <p>User Information</p>
+      <h3>User Information</h3>
       <Avatar
         alt={user.name}
         src={user.image}
         sx={{ width: 128, height: 128 }}
       />
-      <p>
-        <strong>name:</strong> {user.name}
-      </p>
-      <p>
-        <strong>email:</strong> {user.email}
-      </p>
+      <div className="information">
+        <p>
+          <strong>Name:</strong> {user.name}
+        </p>
+        <p>
+          <strong>Age:</strong> {user.age}
+        </p>
+        <p>
+          <strong>Telephone:</strong> {user.telephone}
+        </p>
+        <p>
+          <strong>Email:</strong> {user.email}
+        </p>
+        <p>
+          <strong>Address:</strong> {user.address}
+        </p>
+      </div>
+
       <Button onClick={() => dispatch(userActions.loginHandler(false))}>
         Log out
       </Button>

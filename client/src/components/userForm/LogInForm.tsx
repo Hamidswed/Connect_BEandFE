@@ -1,4 +1,4 @@
-import { Alert, TextField } from "@mui/material";
+import { Alert, IconButton, TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import { Form, Formik } from "formik";
@@ -11,17 +11,21 @@ import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
 import { fetchUserData } from "../../redux/thunk/user";
 import { useSelector } from "react-redux";
-import { userActions } from './../../redux/slice/user';
+import { userActions } from "./../../redux/slice/user";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const LogInForm = () => {
   const [open, setOpen] = useState(false);
-  // const [user, setUser] = useState<UserType>();
-  // const [isLogin, setIsLogin] = useState(false);
-  const isLogin = useSelector((state:RootState)=>state.user.isLogin)
-  const dispatchNorm = useDispatch()
+  const [showPass, setShowPass] = useState(false);
+  const isLogin = useSelector((state: RootState) => state.user.isLogin);
+  const dispatchNorm = useDispatch();
   const user = useSelector((state: RootState) => state.user.user);
   const dispatch = useDispatch<AppDispatch>();
 
+  const showPassHandler = () => {
+    setShowPass(!showPass);
+  };
   const handleClick = () => {
     setOpen(true);
   };
@@ -40,8 +44,11 @@ const LogInForm = () => {
   const initiialValues: UserType = {
     id: 1,
     name: "",
+    age: 1,
     email: "",
     password: "",
+    telephone: 0,
+    address: "",
     image: "",
   };
 
@@ -60,30 +67,13 @@ const LogInForm = () => {
   const submitHandler = (values: UserType) => {
     console.log(values);
     dispatch(fetchUserData(values));
-    // fetch("http://localhost:8000/users", {
-    //   method: "POST", // or 'PUT'
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(values),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setUser(data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    //   });
-    if (
-      user.email === values.email &&
-      user.password === values.password
-    ) {
-      dispatchNorm(userActions.loginHandler(true))
+    if (user.email === values.email && user.password === values.password) {
+      dispatchNorm(userActions.loginHandler(true));
     } else {
       handleClick();
     }
   };
-console.log(user,'user');
+
   return (
     <div className="form-container">
       {!isLogin ? (
@@ -110,8 +100,20 @@ console.log(user,'user');
                     name="password"
                     label="Password"
                     onChange={handleChange}
-                    type="password"
+                    type={showPass ? "text" : "password"}
                   />
+                  <span className="visibility">
+                    {showPass ? (
+                      <IconButton onClick={showPassHandler}>
+                        <VisibilityOff />
+                      </IconButton>
+                    ) : (
+                      <IconButton onClick={showPassHandler}>
+                        <Visibility />
+                      </IconButton>
+                    )}
+                  </span>
+
                   {errors.password && touched.password ? (
                     <p>{errors.password}</p>
                   ) : null}
