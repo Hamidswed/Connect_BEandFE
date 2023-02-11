@@ -8,12 +8,17 @@ import {
   BadgeProps,
   MenuItem,
   Avatar,
+  Tooltip,
 } from "@mui/material";
 import styled from "@emotion/styled";
 import MenuIcon from "@mui/icons-material/Menu";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import HomeIcon from "@mui/icons-material/Home";
+import FourGPlusMobiledataIcon from "@mui/icons-material/FourGPlusMobiledata";
+import { ReactComponent as Logo } from "../../assets/logo.svg";
 
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -49,61 +54,59 @@ export default function NavBar() {
           <IconButton
             size="large"
             edge="start"
+            aria-haspopup="true"
             color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
           >
-            <MenuIcon />
+            <Logo />
           </IconButton>
-          <MenuItem component={Link} to={"/"}>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ display: { xs: "none", sm: "block" } }}
-            >
-              Home
-            </Typography>
-          </MenuItem>
-          <MenuItem component={Link} to={"/products"}>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ display: { xs: "none", sm: "block" } }}
-            >
-              Product list
-            </Typography>
-          </MenuItem>
+
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex", gap: "10px" } }}>
-            <MenuItem component={Link} to={"/cart"}>
-              <StyledBadge badgeContent={cartState.length} color="error">
-                <ShoppingCartIcon />
-              </StyledBadge>
+          <Tooltip title="Home">
+            <MenuItem component={Link} to={"/"}>
+              <HomeIcon />
             </MenuItem>
-            <MenuItem component={Link} to={"/favorite"}>
-              <StyledBadge badgeContent={favState.length} color="error">
-                <FavoriteIcon />
-              </StyledBadge>
-            </MenuItem>
+            </Tooltip>
+            <Tooltip title="Product list">
+              <MenuItem component={Link} to={"/products"}>
+                <FormatListBulletedIcon />
+              </MenuItem>
+            </Tooltip>
+            <Tooltip title="Cart">
+              <MenuItem component={Link} to={"/cart"}>
+                <StyledBadge badgeContent={cartState.length} color="error">
+                  <ShoppingCartIcon />
+                </StyledBadge>
+              </MenuItem>
+            </Tooltip>
+            <Tooltip title="Favorite">
+              <MenuItem component={Link} to={"/favorite"}>
+                <StyledBadge badgeContent={favState.length} color="error">
+                  <FavoriteIcon />
+                </StyledBadge>
+              </MenuItem>
+            </Tooltip>
             <Link to="/login" style={{ textDecoration: "none", color: "#fff" }}>
               {isLogin ? (
-                <Avatar
-                  alt={user.name}
-                  src={user.image}
-                  sx={{ width: 40, height: 40 }}
-                />
+                <Tooltip title={user.name}>
+                  <Avatar
+                    alt={user.name}
+                    src={user.image}
+                    sx={{ width: 40, height: 40 }}
+                  />
+                </Tooltip>
               ) : (
-                <IconButton
-                  size="large"
-                  edge="end"
-                  aria-label="account of current user"
-                  aria-haspopup="true"
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
+                <Tooltip title="Login">
+                  <IconButton
+                    size="large"
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-haspopup="true"
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                </Tooltip>
               )}
             </Link>
           </Box>

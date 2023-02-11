@@ -1,4 +1,5 @@
 import Avatar from "@mui/material/Avatar";
+import Divider from "@mui/material/Divider";
 import "./userInformation.css";
 import { Button } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,6 +17,7 @@ export default function UserInformation() {
         src={user.image}
         sx={{ width: 128, height: 128 }}
       />
+      <Divider sx={{ width: "100%" }} />
       <div className="information">
         <p>
           <strong>Name:</strong> {user.name}
@@ -24,7 +26,7 @@ export default function UserInformation() {
           <strong>Age:</strong> {user.age}
         </p>
         <p>
-          <strong>Telephone:</strong> {user.telephone}
+          <strong>Telephone:</strong> +{user.telephone}
         </p>
         <p>
           <strong>Email:</strong> {user.email}
@@ -33,7 +35,7 @@ export default function UserInformation() {
           <strong>Address:</strong> {user.address}
         </p>
       </div>
-
+      <Divider sx={{ width: "100%" }} />
       <Button onClick={() => dispatch(userActions.loginHandler(false))}>
         Log out
       </Button>

@@ -41,7 +41,7 @@ const FavoriteList = () => {
           <TableContainer component={Paper} style={{ marginTop: "50px" }}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
-                <TableRow sx={{ backgroundColor: "#ffb703" }}>
+                <TableRow sx={{ backgroundColor: "#474747" }}>
                   <TableCell align="center">
                     <strong>Item</strong>
                   </TableCell>
