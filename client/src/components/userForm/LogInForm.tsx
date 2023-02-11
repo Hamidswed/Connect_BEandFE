@@ -8,6 +8,7 @@ import { forwardRef, useState } from "react";
 import { UserType } from "../../types/userType";
 import "./loginForm.css";
 import UserInformation from "../userInformation/UserInformation";
+import { useDispatch } from 'react-redux';
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -19,8 +20,9 @@ const LogInForm = () => {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState<UserType>();
   const [isLogin, setIsLogin] = useState(false);
-  const [submitClicked, setSubmitClicked] = useState(false);
 
+  const dispatch = useDispatch
+  
   const handleClick = () => {
     setOpen(true);
   };
@@ -57,7 +59,6 @@ const LogInForm = () => {
       .required("Please Enter your password"),
   });
   const submitHandler = (values: UserType) => {
-    setSubmitClicked(true);
     console.log(values);
     fetch("http://localhost:8000/users", {
       method: "POST", // or 'PUT'
@@ -75,12 +76,10 @@ const LogInForm = () => {
       });
     if (user?.email === values.email && user.password === values.password) {
       setIsLogin(true);
+    }else{
       handleClick();
     }
   };
-  console.log("Success:", user);
-  console.log("is login", isLogin);
-  console.log("clicked", submitClicked);
 
   return (
     <div className="form-container">
@@ -117,7 +116,6 @@ const LogInForm = () => {
                 <Button variant="contained" type="submit">
                   Log In
                 </Button>
-                {submitClicked ? (!isLogin&&<p>Invalid email or password!</p>) : null}
               </Form>
             );
           }}
@@ -126,9 +124,9 @@ const LogInForm = () => {
         <UserInformation user={user} />
       )}
 
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          You have logged in successfully!
+      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          Invalid email or password!
         </Alert>
       </Snackbar>
     </div>

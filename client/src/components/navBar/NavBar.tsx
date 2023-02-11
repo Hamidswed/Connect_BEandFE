@@ -30,6 +30,7 @@ const StyledBadge = styled(Badge)<BadgeProps>(() => ({
 export default function NavBar() {
   // const favList = useSelector((state: RootState) => state.country.favorite);
   const cartState = useSelector((state: RootState) => state.product.carts);
+  const favState = useSelector((state:RootState)=>state.product.favorites)
 
   return (
     <Box
@@ -78,8 +79,8 @@ export default function NavBar() {
                 <ShoppingCartIcon />
               </StyledBadge>
             </MenuItem>
-            <MenuItem component={Link} to={"/favorites"}>
-              <StyledBadge badgeContent="4" color="error">
+            <MenuItem component={Link} to={"/favorite"}>
+              <StyledBadge badgeContent={favState.length} color="error">
                 <FavoriteIcon />
               </StyledBadge>
             </MenuItem>

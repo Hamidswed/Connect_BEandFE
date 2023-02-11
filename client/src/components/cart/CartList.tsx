@@ -109,9 +109,6 @@ const CartList = () => {
                     <strong>Price</strong>
                   </TableCell>
                   <TableCell align="center">
-                    <strong>Rating</strong>
-                  </TableCell>
-                  <TableCell align="center">
                     <strong>Quantity</strong>
                   </TableCell>
                   <TableCell align="center">
@@ -129,7 +126,7 @@ const CartList = () => {
               Checkout
             </CheckOutBTN>
             <p>
-              <strong>Total Price</strong>
+              <strong>Total Price:</strong>
             </p>
             <p>
               <strong>$ {totalPrice.toFixed(2)}</strong>

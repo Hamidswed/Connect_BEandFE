@@ -1,24 +1,28 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import { ProductType } from '../../types/productType'
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ProductType } from "../../types/productType";
 
-type InitialType={
-  products:ProductType[]
-  carts:ProductType[]
+type InitialType = {
+  products: ProductType[];
+  favorites: ProductType[];
+  carts: ProductType[];
   totalPrice: number;
-}
+  isAddToFav: boolean;
+};
 
-const initialState:InitialType={
-  products:[],
-  carts:[],
-  totalPrice:0
-}
+const initialState: InitialType = {
+  products: [],
+  favorites: [],
+  carts: [],
+  totalPrice: 0,
+  isAddToFav: false,
+};
 
 const productSlice = createSlice({
-  name:'product',
+  name: "product",
   initialState,
-  reducers:{
-    getProductData: (state,action)=>{
-      state.products = action.payload
+  reducers: {
+    getProductData: (state, action) => {
+      state.products = action.payload;
     },
     addToCart: (state, action: PayloadAction<ProductType>) => {
       const index = state.carts.findIndex(
@@ -53,8 +57,31 @@ const productSlice = createSlice({
         return acc + curr.qty * curr.price;
       }, 0);
     },
-  }
-})
+    addToFavorite: (state, action) => {
+      const index = state.favorites.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      if (index === -1) {
+        state.favorites.push(action.payload);
+        state.isAddToFav = true;
+        localStorage.setItem(
+          "favorites",
+          JSON.stringify(state.favorites.map((item) => item))
+        );
+      }
+    },
+    removeFromFavorite: (state, action) => {
+      const index = state.favorites.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      index >= 0 && state.favorites.splice(index, 1);
+      localStorage.setItem(
+        "favorites",
+        JSON.stringify(state.favorites.map((item) => item))
+      );
+    },
+  },
+});
 
-export const actions= productSlice.actions
-export default productSlice.reducer
+export const actions = productSlice.actions;
+export default productSlice.reducer;
