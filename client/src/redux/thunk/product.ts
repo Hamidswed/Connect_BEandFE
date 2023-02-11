@@ -8,5 +8,4 @@ export function fetchProductData() {
     const data = await response.json();
     dispatch(actions.getProductData(data));
   };
-  
 }

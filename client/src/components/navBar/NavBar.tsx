@@ -7,6 +7,7 @@ import {
   Badge,
   BadgeProps,
   MenuItem,
+  Avatar,
 } from "@mui/material";
 import styled from "@emotion/styled";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -30,7 +31,9 @@ const StyledBadge = styled(Badge)<BadgeProps>(() => ({
 export default function NavBar() {
   // const favList = useSelector((state: RootState) => state.country.favorite);
   const cartState = useSelector((state: RootState) => state.product.carts);
-  const favState = useSelector((state:RootState)=>state.product.favorites)
+  const favState = useSelector((state: RootState) => state.product.favorites);
+  const user = useSelector((state: RootState) => state.user.user);
+  const isLogin = useSelector((state: RootState) => state.user.isLogin);
 
   return (
     <Box
@@ -73,7 +76,7 @@ export default function NavBar() {
             </Typography>
           </MenuItem>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ display: { xs: "none", md: "flex", gap: "10px" } }}>
             <MenuItem component={Link} to={"/cart"}>
               <StyledBadge badgeContent={cartState.length} color="error">
                 <ShoppingCartIcon />
@@ -85,15 +88,23 @@ export default function NavBar() {
               </StyledBadge>
             </MenuItem>
             <Link to="/login" style={{ textDecoration: "none", color: "#fff" }}>
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-haspopup="true"
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
+              {isLogin ? (
+                <Avatar
+                  alt={user.name}
+                  src={user.image}
+                  sx={{ width: 40, height: 40 }}
+                />
+              ) : (
+                <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-haspopup="true"
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+              )}
             </Link>
           </Box>
         </Toolbar>

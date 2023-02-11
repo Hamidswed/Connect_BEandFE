@@ -1,24 +1,30 @@
-import React from "react";
-import { UserType } from "../../types/userType";
 import Avatar from "@mui/material/Avatar";
 import "./userInformation.css";
 import { Button } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../redux/store";
+import { userActions } from "./../../redux/slice/user";
 
-type PropType = {
-  user: UserType | undefined;
-};
-export default function UserInformation({ user }: PropType) {
+export default function UserInformation() {
+  const user = useSelector((state: RootState) => state.user.user);
+  const dispatch = useDispatch();
   return (
     <div className="user-info">
-      UserInformation
+      <p>User Information</p>
       <Avatar
-        alt={user?.name}
-        src={user?.image}
-        sx={{ width: 64, height: 64 }}
+        alt={user.name}
+        src={user.image}
+        sx={{ width: 128, height: 128 }}
       />
-      <p>name: {user?.name}</p>
-      <p>email: {user?.email}</p>
-      <Button>Log out</Button>
+      <p>
+        <strong>name:</strong> {user.name}
+      </p>
+      <p>
+        <strong>email:</strong> {user.email}
+      </p>
+      <Button onClick={() => dispatch(userActions.loginHandler(false))}>
+        Log out
+      </Button>
     </div>
   );
 }

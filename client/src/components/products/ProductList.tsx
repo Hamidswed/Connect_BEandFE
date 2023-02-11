@@ -9,8 +9,6 @@ import "./productList.css";
 export default function ProductList() {
   const productList = useSelector((state: RootState) => state.product.products);
   const dispatch = useDispatch<AppDispatch>();
-
-
   useEffect(() => {
     dispatch(fetchProductData());
   }, [dispatch]);

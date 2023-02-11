@@ -1,6 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ProductType } from "../../types/productType";
 
+const favouriteItems =
+  localStorage.getItem("favorites") != null
+    ? JSON.parse(localStorage.getItem("favorites") as string)
+    : [];
+
 type InitialType = {
   products: ProductType[];
   favorites: ProductType[];
@@ -11,11 +16,12 @@ type InitialType = {
 
 const initialState: InitialType = {
   products: [],
-  favorites: [],
+  favorites: favouriteItems,
   carts: [],
   totalPrice: 0,
   isAddToFav: false,
 };
+
 
 const productSlice = createSlice({
   name: "product",
