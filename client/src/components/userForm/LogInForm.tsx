@@ -4,7 +4,6 @@ import Snackbar from "@mui/material/Snackbar";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useState } from "react";
-import { UserType } from "../../types/userType";
 import "./loginForm.css";
 import UserInformation from "../userInformation/UserInformation";
 import { useDispatch } from "react-redux";
@@ -15,10 +14,15 @@ import { userActions } from "./../../redux/slice/user";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
+export type InitialType = {
+  email: string;
+  password: string;
+};
 const LogInForm = () => {
   const [open, setOpen] = useState(false);
   const [showPass, setShowPass] = useState(false);
-  const [userInput, setUerInput] = useState<UserType>()
+  const [userInput, setUerInput] = useState<InitialType>();
+  const [submitClicked, setSubmitClicked] = useState(false);
   const isLogin = useSelector((state: RootState) => state.user.isLogin);
   const dispatchNorm = useDispatch();
   const user = useSelector((state: RootState) => state.user.user);
@@ -42,15 +46,9 @@ const LogInForm = () => {
     setOpen(false);
   };
 
-  const initiialValues: UserType = {
-    id: userInput?.id,
-    name: userInput?.name,
-    age: userInput?.age,
-    email: userInput?.email,
-    password: userInput?.password,
-    telephone: userInput?.telephone,
-    address: userInput?.address,
-    image: userInput?.image,
+  const initialValues: InitialType = {
+    email: "",
+    password: "",
   };
 
   const SinginSchema = Yup.object().shape({
@@ -65,34 +63,28 @@ const LogInForm = () => {
       )
       .required("Please Enter your password"),
   });
-  const submitHandler = (values: UserType) => {
-    setUerInput(values)
+  const submitHandler = (values: InitialType) => {
+    setSubmitClicked(true);
+    setUerInput(values);
     dispatch(fetchUserData(values));
-    logIn()
-    // if (user.email === values.email && user.password === values.password) {
-    //   dispatchNorm(userActions.loginHandler(true));
-    // } else {
-    //   handleClick();
-    // }
-  };
-  const logIn=()=>{
-    console.log("in login function:",userInput);
-    if (user.email === userInput?.email && user.password === userInput?.password) {
+    console.log(user, "user in submit");
+    if (user.email === values.email && user.password === values.password) {
       dispatchNorm(userActions.loginHandler(true));
+      setSubmitClicked(false);
     } else {
       handleClick();
     }
-  }
-
+  };
+  console.log(submitClicked, "submit clicked");
   return (
     <div className="form-container">
       {!isLogin ? (
         <Formik
-          initialValues={initiialValues}
+          initialValues={initialValues}
           onSubmit={submitHandler}
           validationSchema={SinginSchema}
         >
-          {({ errors, touched, handleChange }) => {
+          {({ values, errors, touched, handleChange }) => {
             return (
               <Form className="form">
                 <div>
@@ -101,6 +93,7 @@ const LogInForm = () => {
                     name="email"
                     label="Email"
                     onChange={handleChange}
+                    value={values.email}
                   />
                   {errors.email && touched.email ? <p>{errors.email}</p> : null}
                 </div>
@@ -110,6 +103,7 @@ const LogInForm = () => {
                     name="password"
                     label="Password"
                     onChange={handleChange}
+                    value={values.password}
                     type={showPass ? "text" : "password"}
                   />
                   <span className="visibility">
@@ -123,13 +117,12 @@ const LogInForm = () => {
                       </IconButton>
                     )}
                   </span>
-
                   {errors.password && touched.password ? (
                     <p>{errors.password}</p>
                   ) : null}
                 </div>
                 <Button variant="contained" type="submit">
-                  Log In
+                  log in
                 </Button>
               </Form>
             );
@@ -138,7 +131,6 @@ const LogInForm = () => {
       ) : (
         <UserInformation />
       )}
-
       <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
           Invalid email or password!

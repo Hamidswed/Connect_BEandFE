@@ -29,9 +29,6 @@ const userSlice = createSlice({
     loginHandler: (state, action) => {
       state.isLogin = action.payload;
     },
-    // addUser: (state, action: PayloadAction<UserType>) => {
-    //   state.users.push(action.payload);
-    // },
   },
 });
 export const userActions = userSlice.actions;

@@ -1,10 +1,10 @@
 export type UserType = {
-  id: number|undefined;
-  age: number|undefined;
-  name: string|undefined;
-  email: string|undefined;
-  password: string|undefined;
-  telephone: number|undefined;
-  address: string|undefined;
-  image: string|undefined;
+  id: number
+  age: number
+  name: string
+  email: string
+  password: string
+  telephone: number
+  address: string
+  image: string
 };
