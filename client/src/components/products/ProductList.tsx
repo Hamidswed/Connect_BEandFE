@@ -7,11 +7,12 @@ import ProductItem from "./ProductItem";
 import "./productList.css";
 
 export default function ProductList() {
+  const userInput = useSelector((state: RootState) => state.search.userInput);
   const productList = useSelector((state: RootState) => state.product.products);
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(fetchProductData());
-  }, [dispatch]);
+    userInput==="" && dispatch(fetchProductData());
+  }, [dispatch, userInput]);
   return (
     <div className="product-list">
       {productList.map((item) => {
