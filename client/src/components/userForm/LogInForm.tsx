@@ -18,6 +18,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 const LogInForm = () => {
   const [open, setOpen] = useState(false);
   const [showPass, setShowPass] = useState(false);
+  const [userInput, setUerInput] = useState<UserType>()
   const isLogin = useSelector((state: RootState) => state.user.isLogin);
   const dispatchNorm = useDispatch();
   const user = useSelector((state: RootState) => state.user.user);
@@ -42,14 +43,14 @@ const LogInForm = () => {
   };
 
   const initiialValues: UserType = {
-    id: 1,
-    name: "",
-    age: 1,
-    email: "",
-    password: "",
-    telephone: 0,
-    address: "",
-    image: "",
+    id: userInput?.id,
+    name: userInput?.name,
+    age: userInput?.age,
+    email: userInput?.email,
+    password: userInput?.password,
+    telephone: userInput?.telephone,
+    address: userInput?.address,
+    image: userInput?.image,
   };
 
   const SinginSchema = Yup.object().shape({
@@ -65,14 +66,23 @@ const LogInForm = () => {
       .required("Please Enter your password"),
   });
   const submitHandler = (values: UserType) => {
-    console.log(values);
+    setUerInput(values)
     dispatch(fetchUserData(values));
-    if (user.email === values.email && user.password === values.password) {
+    logIn()
+    // if (user.email === values.email && user.password === values.password) {
+    //   dispatchNorm(userActions.loginHandler(true));
+    // } else {
+    //   handleClick();
+    // }
+  };
+  const logIn=()=>{
+    console.log("in login function:",userInput);
+    if (user.email === userInput?.email && user.password === userInput?.password) {
       dispatchNorm(userActions.loginHandler(true));
     } else {
       handleClick();
     }
-  };
+  }
 
   return (
     <div className="form-container">

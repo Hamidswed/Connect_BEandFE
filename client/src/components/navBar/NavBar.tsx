@@ -49,7 +49,7 @@ export default function NavBar() {
         zIndex: "100",
       }}
     >
-      <AppBar position="static" sx={{ backgroundColor: "#474747" }}>
+      <AppBar position="static" sx={{ backgroundColor: "#303030" }}>
         <Toolbar>
         <MenuItem component={Link} to={"/"}
           >
