@@ -19,12 +19,18 @@
 }
 .hero-right{
   flex:1.5;
+  margin: 100px 0;
 }
-.hero-right :first-child{
-  padding-top: 150px;
-}
-.hero-right :last-child{
+.hero-right :nth-child(2){
   background: -webkit-linear-gradient(45deg, #2FA2B7,  #7D88FD,#F65AAA,#ED3F4B);
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin:0;
+  padding:0
+}
+.hero-right a{
+  text-decoration: none;
+}
+.hero-right a button{
+  margin-top: 50px;
 }

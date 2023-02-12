@@ -26,14 +26,18 @@ function createData(
   title: string,
   price: number,
   image: string,
-  qty: number
+  images:string,
+  qty: number,
+  description:string
 ) {
   return {
     id,
     title,
     price,
     image,
+    images,
     qty,
+    description
   };
 }
 const CartList = () => {
@@ -54,11 +58,12 @@ const CartList = () => {
     setOpen(false);
   };
   const CheckOutBTN = styled(Button)({
-    color: "#06d6a0",
-    borderColor: "#06d6a0",
+    color: "#fff",
+    backgroundColor:'black',
+    border: "none",
     "&:hover": {
-      color: "#ffb703",
-      borderColor: "#ffb703",
+      backgroundColor: "#adc178",
+      border: "none",
     },
   });
   const cartState = useSelector((state: RootState) => state.product.carts);
@@ -76,7 +81,9 @@ const CartList = () => {
       cart.title,
       cart.price,
       cart.image,
-      cart.qty
+      cart.images,
+      cart.qty,
+      cart.description
     );
   });
   return (
@@ -126,10 +133,10 @@ const CartList = () => {
               Checkout
             </CheckOutBTN>
             <p>
-              <strong>Total Price:</strong>
+              <strong style={{color:"black"}}>Total Price:</strong>
             </p>
             <p>
-              <strong>$ {totalPrice.toFixed(2)}</strong>
+              <strong style={{color:"black"}}>$ {totalPrice.toFixed(2)}</strong>
             </p>
           </div>
         </>
@@ -137,7 +144,7 @@ const CartList = () => {
 
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          This is a success message!
+          Checkout is done!
         </Alert>
       </Snackbar>
     </div>

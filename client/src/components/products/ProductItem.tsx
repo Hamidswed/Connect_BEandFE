@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actions } from "./../../redux/slice/product";
 import { useState } from "react";
 import { RootState } from "../../redux/store";
+import { Link } from "react-router-dom";
 
 type PropType = {
   product: ProductType;
@@ -68,17 +69,19 @@ export default function ProductItem({ product }: PropType) {
   return (
     <div>
       <Card sx={{ width: 345 }}>
-        <CardMedia
-          sx={{
-            height: 300,
-            width: "fit-content",
-            padding: "20px",
-            margin: "0 auto",
-          }}
-          image={product.image}
-          component="img"
-          title={product.title}
-        />
+        <Link to={`/products/${product.id}`}>
+          <CardMedia
+            sx={{
+              height: 300,
+              width: "fit-content",
+              padding: "20px",
+              margin: "0 auto",
+            }}
+            image={product.image}
+            component="img"
+            title={product.title}
+          />
+        </Link>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {product.title}

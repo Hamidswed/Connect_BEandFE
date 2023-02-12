@@ -8,6 +8,7 @@ const favouriteItems =
 
 type InitialType = {
   products: ProductType[];
+  productDetail: ProductType;
   favorites: ProductType[];
   carts: ProductType[];
   totalPrice: number;
@@ -15,11 +16,19 @@ type InitialType = {
 
 const initialState: InitialType = {
   products: [],
+  productDetail: {
+    id: 1,
+    title: "",
+    price: 0,
+    image: "",
+    images: "",
+    qty: 0,
+    description: "",
+  },
   favorites: favouriteItems,
   carts: [],
   totalPrice: 0,
 };
-
 
 const productSlice = createSlice({
   name: "product",
@@ -27,6 +36,9 @@ const productSlice = createSlice({
   reducers: {
     getProductData: (state, action) => {
       state.products = action.payload;
+    },
+    getProductDetail: (state, action) => {
+      state.productDetail = action.payload;
     },
     addToCart: (state, action: PayloadAction<ProductType>) => {
       const index = state.carts.findIndex(

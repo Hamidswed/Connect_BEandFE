@@ -8,10 +8,16 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 
 export default function Footer() {
   return (
-    <Box sx={{ flexGrow: 1, position: "relative", textAlign: "center" }}>
+    <Box
+      sx={{
+        flexGrow: 1,
+        position: "relative",
+        textAlign: "center",
+      }}
+    >
       <AppBar
         position="static"
-        sx={{ backgroundColor: "#303030", height: "120px" }}
+        sx={{ backgroundColor: "#303030", height: "100px",position:"relative", bottom: 0, left: 0, zIndex:100 }}
       >
         <Toolbar>
           <Typography
