@@ -3,7 +3,6 @@ import {
   Box,
   Toolbar,
   IconButton,
-  Typography,
   Badge,
   BadgeProps,
   MenuItem,
@@ -11,13 +10,11 @@ import {
   Tooltip,
 } from "@mui/material";
 import styled from "@emotion/styled";
-import MenuIcon from "@mui/icons-material/Menu";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import HomeIcon from "@mui/icons-material/Home";
-import FourGPlusMobiledataIcon from "@mui/icons-material/FourGPlusMobiledata";
 import { ReactComponent as Logo } from "../../assets/logo.svg";
 
 import { Link } from "react-router-dom";
@@ -34,7 +31,6 @@ const StyledBadge = styled(Badge)<BadgeProps>(() => ({
 }));
 
 export default function NavBar() {
-  // const favList = useSelector((state: RootState) => state.country.favorite);
   const cartState = useSelector((state: RootState) => state.product.carts);
   const favState = useSelector((state: RootState) => state.product.favorites);
   const user = useSelector((state: RootState) => state.user.user);
