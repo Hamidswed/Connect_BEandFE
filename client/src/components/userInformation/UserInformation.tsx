@@ -5,10 +5,22 @@ import { Button } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import { userActions } from "./../../redux/slice/user";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function UserInformation() {
   const user = useSelector((state: RootState) => state.user.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(userActions.loginHandler(true));
+  }, [dispatch]);
+
+  const logOut = () => {
+    dispatch(userActions.loginHandler(false));
+    navigate("/login");
+  };
   return (
     <div className="user-info">
       <h3>User Information</h3>
@@ -36,9 +48,7 @@ export default function UserInformation() {
         </p>
       </div>
       <Divider sx={{ width: "100%" }} />
-      <Button onClick={() => dispatch(userActions.loginHandler(false))}>
-        Log out
-      </Button>
+      <Button onClick={logOut}>Log out</Button>
     </div>
   );
 }

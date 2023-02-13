@@ -77,7 +77,7 @@ export default function NavBar() {
                 </StyledBadge>
               </MenuItem>
             </Tooltip>
-            <Link to="/login" style={{ textDecoration: "none", color: "#fff" }}>
+            <Link to={isLogin?"/user":"login"} style={{ textDecoration: "none", color: "#fff" }}>
               {isLogin ? (
                 <Tooltip title={user.name}>
                   <Avatar
