@@ -14,7 +14,7 @@ const ProductDetail = () => {
   useEffect(()=>{
     dispatch(fetchProductDetail(Number(id)))
   },[dispatch, id])
-console.log(productDetail,'detail');
+
   return (
     <div>
       <ProductDetailItem productDetail={productDetail}/>
