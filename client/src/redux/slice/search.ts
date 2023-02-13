@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ProductType } from "../../types/productType";
 
 const initialState = {
   userInput: "",
